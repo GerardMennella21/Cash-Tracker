@@ -22,14 +22,14 @@ request.onerror = function(event) {
 
 // Function to save record locally while offline
 function saveRecord(record) {
-    const transaction = db.transaction(['new_budget', 'readwrite']);
+    const transaction = db.transaction(['new_budget'], 'readwrite');
     const store = transaction.objectStore('new_budget')
     store.add(record)
 }
 
 // Function to upload record when back online
 function uploadBudget() {
-    const transaction = db.transaction(['new_budget', 'readwrite']);
+    const transaction = db.transaction(['new_budget'], 'readwrite');
     const store = transaction.objectStore("new_budget");
     const getAll = store.getAll();
 
@@ -48,7 +48,7 @@ function uploadBudget() {
                     if (serverResponse.message) {
                         throw new Error(serverResponse)
                     }
-                    const transaction = db.transaction(['new_budget', 'readwrite']);
+                    const transaction = db.transaction(['new_budget'], 'readwrite');
                     const store = transaction.objectStore('new_budget')
                     store.clear();
                 })
